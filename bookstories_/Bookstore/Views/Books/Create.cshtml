@@ -1,0 +1,97 @@
+@model Bookstore.Models.Book
+
+@{
+    ViewData["Title"] = "إضافة كتاب جديد";
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="mb-0"><i class="fas fa-book-plus me-3"></i>إضافة كتاب جديد</h1>
+                <p class="mb-0 opacity-75">أدخل بيانات الكتاب الجديد</p>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <a asp-action="Index" class="btn btn-light btn-lg">
+                    <i class="fas fa-arrow-right me-2"></i>العودة للقائمة
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-book me-2"></i>بيانات الكتاب</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                        
+                        <div class="mb-4">
+                            <label asp-for="Title" class="form-label fw-bold">
+                                <i class="fas fa-book me-2"></i>عنوان الكتاب
+                            </label>
+                            <input asp-for="Title" class="form-control form-control-lg" 
+                                   placeholder="أدخل عنوان الكتاب" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                            <div class="form-text">
+                                <i class="fas fa-info-circle me-1"></i>
+                                أدخل العنوان الكامل للكتاب
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Description" class="form-label fw-bold">
+                                <i class="fas fa-align-left me-2"></i>وصف الكتاب
+                            </label>
+                            <textarea asp-for="Description" class="form-control" rows="4" 
+                                      placeholder="أدخل وصفاً مختصراً للكتاب"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                            <div class="form-text">
+                                <i class="fas fa-info-circle me-1"></i>
+                                يمكنك إضافة وصف مختصر لمحتوى الكتاب
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="AuthorId" class="form-label fw-bold">
+                                <i class="fas fa-user-edit me-2"></i>المؤلف
+                            </label>
+                            <select asp-for="AuthorId" class="form-select form-select-lg" asp-items="ViewBag.AuthorId">
+                                <option value="">-- اختر المؤلف --</option>
+                            </select>
+                            <span asp-validation-for="AuthorId" class="text-danger"></span>
+                            <div class="form-text">
+                                <i class="fas fa-info-circle me-1"></i>
+                                اختر المؤلف من القائمة المنسدلة
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a asp-action="Index" class="btn btn-secondary btn-lg me-md-2">
+                                <i class="fas fa-times me-2"></i>إلغاء
+                            </a>
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fas fa-save me-2"></i>حفظ الكتاب
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        // Auto-focus on the first input field
+        $(document).ready(function() {
+            $('#Title').focus();
+        });
+    </script>
+} 

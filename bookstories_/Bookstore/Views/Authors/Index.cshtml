@@ -1,0 +1,100 @@
+@model IEnumerable<Bookstore.Models.Author>
+
+@{
+    ViewData["Title"] = "المؤلفون";
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="mb-0"><i class="fas fa-user-edit me-3"></i>المؤلفون</h1>
+                <p class="mb-0 opacity-75">إدارة المؤلفين والكتّاب في المكتبة</p>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <a asp-action="Create" class="btn btn-light btn-lg">
+                    <i class="fas fa-plus me-2"></i>إضافة مؤلف جديد
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            @if (!Model.Any())
+            {
+                <div class="text-center py-5">
+                    <i class="fas fa-user-edit fa-3x text-muted mb-3"></i>
+                    <h4 class="text-muted">لا توجد مؤلفين</h4>
+                    <p class="text-muted">ابدأ بإضافة أول مؤلف إلى المكتبة</p>
+                    <a asp-action="Create" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>إضافة مؤلف
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-primary">
+                            <tr>
+                                <th><i class="fas fa-user me-2"></i>اسم المؤلف</th>
+                                <th><i class="fas fa-book me-2"></i>عدد الكتب</th>
+                                <th class="text-center"><i class="fas fa-cogs me-2"></i>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar-sm bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3">
+                                                <i class="fas fa-user"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-0">@Html.DisplayFor(modelItem => item.FullName)</h6>
+                                                <small class="text-muted">مؤلف</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-info fs-6">@(item.Books?.Count ?? 0) كتاب</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="btn-group" role="group">
+                                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm" title="عرض التفاصيل">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm" title="تعديل">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm" title="حذف">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .avatar-sm {
+        width: 40px;
+        height: 40px;
+    }
+    .btn-group .btn {
+        margin: 0 2px;
+    }
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 123, 255, 0.05);
+    }
+</style> 

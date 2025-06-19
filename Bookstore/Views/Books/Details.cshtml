@@ -1,0 +1,120 @@
+@model Bookstore.Models.Book
+
+@{
+    ViewData["Title"] = "تفاصيل الكتاب";
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="mb-0"><i class="fas fa-book me-3"></i>تفاصيل الكتاب</h1>
+                <p class="mb-0 opacity-75">معلومات تفصيلية عن الكتاب</p>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <a asp-action="Index" class="btn btn-light btn-lg me-2">
+                    <i class="fas fa-arrow-right me-2"></i>العودة للقائمة
+                </a>
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning btn-lg">
+                    <i class="fas fa-edit me-2"></i>تعديل
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <!-- معلومات الكتاب -->
+        <div class="col-lg-8 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-book me-2"></i>معلومات الكتاب</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 text-center mb-3">
+                            <div class="avatar-lg bg-success text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3">
+                                <i class="fas fa-book fa-2x"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <h3 class="card-title text-success">@Model.Title</h3>
+                            <p class="text-muted mb-3">كتاب</p>
+                            
+                            <div class="row mb-3">
+                                <div class="col-sm-6">
+                                    <strong><i class="fas fa-hashtag me-2"></i>رقم الكتاب:</strong>
+                                    <span class="badge bg-primary fs-6">@Model.Id</span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <strong><i class="fas fa-user me-2"></i>المؤلف:</strong>
+                                    <a asp-controller="Authors" asp-action="Details" asp-route-id="@Model.Author.Id" 
+                                       class="text-decoration-none">
+                                        <span class="badge bg-info fs-6">@Model.Author.FullName</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="mb-3">
+                        <h6 class="fw-bold"><i class="fas fa-align-left me-2"></i>وصف الكتاب:</h6>
+                        <div class="p-3 bg-light rounded">
+                            @if (string.IsNullOrEmpty(Model.Description))
+                            {
+                                <p class="text-muted mb-0"><i class="fas fa-info-circle me-1"></i>لا يوجد وصف متاح</p>
+                            }
+                            else
+                            {
+                                <p class="mb-0">@Model.Description</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- معلومات المؤلف -->
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-user-circle me-2"></i>معلومات المؤلف</h5>
+                </div>
+                <div class="card-body text-center">
+                    <div class="avatar-lg bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3">
+                        <i class="fas fa-user fa-2x"></i>
+                    </div>
+                    <h5 class="card-title">@Model.Author.FullName</h5>
+                    <p class="text-muted">مؤلف</p>
+                    
+                    <div class="d-grid gap-2">
+                        <a asp-controller="Authors" asp-action="Details" asp-route-id="@Model.Author.Id" 
+                           class="btn btn-outline-primary">
+                            <i class="fas fa-eye me-2"></i>عرض تفاصيل المؤلف
+                        </a>
+                        <a asp-controller="Authors" asp-action="Edit" asp-route-id="@Model.Author.Id" 
+                           class="btn btn-outline-warning">
+                            <i class="fas fa-edit me-2"></i>تعديل المؤلف
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .avatar-lg {
+        width: 80px;
+        height: 80px;
+    }
+    .card {
+        transition: transform 0.2s;
+    }
+    .card:hover {
+        transform: translateY(-2px);
+    }
+</style> 
